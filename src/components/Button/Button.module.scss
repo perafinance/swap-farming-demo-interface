@@ -1,0 +1,105 @@
+.button {
+  border-radius: 8px;
+  &.primary {
+    --bg: var(--wh-blue-70);
+    --bg-hover: var(--wh-blue-80);
+    --bg-active: var(--wh-blue-90);
+    --color: white;
+    --border: 1px solid transparent;
+    --shadow: none;
+  }
+
+  &.secondary {
+    --bg: transparent;
+    --bg-hover: transparent;
+    --bg-active: transparent;
+    --color: var(--wh-steel-5);
+    --border: 1px solid var(--wh-steel-5);
+    --shadow: 0px 0px 0px 1px var(--wh-steel-5);
+  }
+
+  &.tertiary {
+    --bg: var(--wh-red-70);
+    --bg-hover: var(--wh-red-60);
+    --bg-active: var(--wh-red-50);
+    --color: white;
+    --border: 1px solid transparent;
+    --shadow: 0px 0px 0px 0px var(--wh-steel-5);
+  }
+
+  background: var(--bg);
+  color: var(--color);
+  border: var(--border);
+  position: relative;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  &:hover {
+    background-color: var(--bg-hover);
+    box-shadow: var(--shadow);
+  }
+
+  &:active {
+    background-color: var(--bg-active);
+  }
+
+  &.loading {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  &.xsmall {
+    border-radius: 6px;
+    padding: 4px 8px;
+
+    * {
+      font-size: 14px;
+    }
+  }
+  &.small {
+    border-radius: 8px;
+    padding: 8px 12px;
+  }
+  &.medium {
+    border-radius: 8px;
+    padding: 8px 14px;
+  }
+  &.large {
+    border-radius: 12px;
+    padding: 12px 22px;
+  }
+  &.xlarge {
+    border-radius: 14px;
+    padding: 16px 24px;
+  }
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.content {
+  display: flex;
+  gap: 6px;
+  &.loading {
+    opacity: 0;
+  }
+}
+
+.loadingIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

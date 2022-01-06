@@ -1,0 +1,108 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  max-width: 100vw;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+.inputWrapper {
+  padding: 24px;
+  background-color: var(--wh-neutral-80);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  min-width: 512px;
+  gap: 2px;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.input {
+  width: 100%;
+  background-color: var(--wh-neutral-80);
+  border: 2px solid var(--wh-neutral-60);
+  outline: none;
+  padding: 1rem 1rem;
+  padding-right: 5rem;
+  color: var(--wh-white);
+  font-size: 26px;
+  border-radius: 8px;
+}
+
+.swapWrapper {
+  margin-top: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.swapIcon {
+  display: flex;
+  padding: 6px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--wh-neutral-70) !important;
+    border-radius: 6px;
+  }
+
+  & svg {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.inputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.logo {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.button {
+  margin-top: 1.5rem;
+}
+
+.metaWrapper {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  & input {
+    margin-top: 8px;
+    color: white;
+    border-radius: 8px;
+    outline: none;
+    background-color: var(--wh-neutral-80);
+    border: 1px solid var(--wh-neutral-60);
+    padding: 0.5rem;
+  }
+
+  & p {
+    font-size: 13px;
+  }
+}
+
+.road {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  height: 337px;
+}
