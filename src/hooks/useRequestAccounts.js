@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAccountData, setIsSignedIn } from "store/reducers/account";
 import { checkIfRightNetwork } from "utils/checkIfRightNetwork";
 import useContracts from "./useContracts";
@@ -18,8 +18,8 @@ export default function useRequestAccounts() {
   }, []);
 
   const dispatch = useDispatch();
-
   const { setContracts } = useContracts();
+  const { address } = useSelector((state) => state.account);
 
   const requestAccounts = async () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
@@ -37,12 +37,6 @@ export default function useRequestAccounts() {
         console.log("hello");
       });
 
-      provider.on("accountsChanged", async () => {
-        /** If it's the first login return */
-
-        window.location.reload();
-      });
-
       dispatch(
         setAccountData({
           address: address,
@@ -51,6 +45,18 @@ export default function useRequestAccounts() {
           signer,
         })
       );
+
+      setInterval(() => {
+        const fetch = async () => {
+          await provider.send("eth_requestAccounts", []);
+          let signer = await provider.getSigner();
+          const newAddress = await signer.getAddress();
+          if (newAddress !== address) {
+            window.location.reload();
+          }
+        };
+        fetch();
+      }, 1000);
 
       return signer;
     } catch {

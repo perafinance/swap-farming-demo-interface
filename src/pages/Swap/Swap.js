@@ -17,7 +17,6 @@ import { useDebounce } from "hooks/useDebounce";
 import { useSwapRequests } from "hooks/useSwapRequests";
 import PeraRoad from "assets/images/pera-road.png";
 import Pangolin from "assets/images/pangolin.png";
-import { ReactComponent as PangolinLogo } from "assets/images/pangolin.svg";
 
 const Swap = () => {
   const [AVAX, setAVAX] = useState("");
