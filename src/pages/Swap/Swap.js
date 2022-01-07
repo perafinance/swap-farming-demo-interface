@@ -16,6 +16,8 @@ import { Button } from "components/Button";
 import { useDebounce } from "hooks/useDebounce";
 import { useSwapRequests } from "hooks/useSwapRequests";
 import PeraRoad from "assets/images/pera-road.png";
+import Pangolin from "assets/images/pangolin.png";
+import { ReactComponent as PangolinLogo } from "assets/images/pangolin.svg";
 
 const Swap = () => {
   const [AVAX, setAVAX] = useState("");
@@ -225,6 +227,9 @@ const Swap = () => {
   return (
     <Fragment>
       <img className={styles.road} src={PeraRoad} />
+      <div className={styles.pangolin}>
+        <span>Powered by Pangolin Liquidity Pools</span> <img src={Pangolin} />
+      </div>
       <div className={styles.layout}>
         <Navbar />
         <div className={styles.wrapper}>
@@ -263,7 +268,7 @@ const Swap = () => {
             </Button>
             <div className={styles.metaWrapper}>
               <div>
-                <p>Slipping tolerance (%)</p>
+                <p>Slippage tolerance (%)</p>
                 <input
                   value={tolerance}
                   type="number"
