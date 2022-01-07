@@ -81,6 +81,21 @@ export const useFunctions = () => {
     return res;
   };
 
+  const claimAllRewards = async () => {
+    const res = await SWAP_CONTRACT.connect(signer).claimAllRewards();
+    return res;
+  };
+
+  const calculateUserRewards = async () => {
+    const res = await SWAP_CONTRACT.calculateUserRewards();
+    return res;
+  };
+
+  const calcDay = async () => {
+    const res = await SWAP_CONTRACT.calcDay();
+    return res;
+  };
+
   return {
     swapExactAVAXForTokens,
     isUSDCAllowed,
@@ -94,5 +109,8 @@ export const useFunctions = () => {
     getAmountsIn,
     isAVAXAllowed,
     approveAVAX,
+    calculateUserRewards,
+    claimAllRewards,
+    calcDay,
   };
 };

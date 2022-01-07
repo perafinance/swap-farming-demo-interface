@@ -51,3 +51,20 @@
   align-items: center;
   gap: 18px;
 }
+
+.claim {
+  display: flex;
+  background-color: var(--wh-neutral-70) !important;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--wh-neutral-60) !important;
+  }
+  & h6 {
+    font-weight: 500;
+    font-size: 16px !important;
+  }
+
+  & svg {
+    color: var(--wh-yellow-20);
+  }
+}

@@ -90,6 +90,7 @@
 }
 
 .content {
+  align-items: center;
   display: flex;
   gap: 6px;
   &.loading {
