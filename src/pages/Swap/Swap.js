@@ -97,9 +97,13 @@ const Swap = () => {
       } else if (lastChange === "usdc" && from === "usdc") {
         let amountMin = Number(AVAX);
         amountMin = String(amountMin * ((100 - tolerance) / 100));
+        console.log(typeof AVAX, typeof amountMin);
+        console.log(AVAX, amountMin);
+        console.log(AVAX.length, amountMin.length);
+
         swapExactTokensReq.exec(
           ethers.utils.parseEther(USDC),
-          ethers.utils.parseEther(amountMin),
+          ethers.utils.parseEther(amountMin?.substring(0, 20)),
           USDC_TO_AVAX,
           address,
           actualDeadline
@@ -109,7 +113,7 @@ const Swap = () => {
         amountMax = String(amountMax * ((100 + tolerance) / 100));
         swapTokensReq.exec(
           ethers.utils.parseEther(AVAX),
-          ethers.utils.parseEther(amountMax),
+          ethers.utils.parseEther(amountMax?.substring(0, 20)),
           USDC_TO_AVAX,
           address,
           actualDeadline
@@ -117,23 +121,19 @@ const Swap = () => {
       }
     };
     let res;
-    if (from === "avax") {
-      res = await isAllowedAvaxReq.exec();
-    } else {
+    if (from === "usdc") {
       res = await isAllowedReq.exec();
-    }
-    if (res?.toString() == 0) {
-      let approval = true;
-      if (from === "avax") {
-        approval = await approveAVAXReq.exec();
-      } else {
+      if (res?.toString() == 0) {
+        let approval = true;
         approval = await approveUSDCReq.exec();
-      }
-      if (approval) {
+        if (approval) {
+          await swap();
+        }
+      } else {
         await swap();
       }
     } else {
-      swap();
+      await swap();
     }
   };
 
