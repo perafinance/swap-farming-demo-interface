@@ -118,17 +118,20 @@ const Swap = () => {
     };
     let res;
     if (from === "avax") {
-      res = await isAllowedReq.exec();
-    } else {
       res = await isAllowedAvaxReq.exec();
+    } else {
+      res = await isAllowedReq.exec();
     }
     if (res?.toString() == 0) {
+      let approval = true;
       if (from === "avax") {
-        await approveUSDCReq.exec();
+        approval = await approveAVAXReq.exec();
       } else {
-        await approveAVAXReq.exec();
+        approval = await approveUSDCReq.exec();
       }
-      await swap();
+      if (approval) {
+        await swap();
+      }
     } else {
       swap();
     }

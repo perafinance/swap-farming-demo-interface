@@ -23,6 +23,7 @@ export const useFunctions = () => {
       MaxUint256
     );
     await txn.wait();
+    return txn;
   };
 
   const approveAVAX = async () => {
@@ -31,6 +32,7 @@ export const useFunctions = () => {
       MaxUint256
     );
     await txn.wait();
+    return txn;
   };
 
   const isUSDCAllowed = async () => {

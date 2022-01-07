@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export const useRequest = (func, { errorMsg, onStart, onFinished } = {}) => {
+export const useRequest = (
+  func,
+  { errorMsg, onStart, onFinished, onFail } = {}
+) => {
   const [loading, setLoading] = useState(false);
 
   const notify = (msg) =>
@@ -27,6 +30,7 @@ export const useRequest = (func, { errorMsg, onStart, onFinished } = {}) => {
       } catch (err) {
         console.error(err);
         setLoading(false);
+        onFail?.();
         if (err.code == 4001) {
           toast("Metamask transaciton rejected");
         } else {

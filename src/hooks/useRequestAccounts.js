@@ -1,4 +1,5 @@
 import { ethers } from "ethers";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setAccountData, setIsSignedIn } from "store/reducers/account";
 import { checkIfRightNetwork } from "utils/checkIfRightNetwork";
@@ -12,7 +13,9 @@ import useContracts from "./useContracts";
 }; */
 
 export default function useRequestAccounts() {
-  checkIfRightNetwork();
+  useEffect(() => {
+    checkIfRightNetwork();
+  }, []);
 
   const dispatch = useDispatch();
 
@@ -28,6 +31,17 @@ export default function useRequestAccounts() {
       const address = await signer.getAddress();
 
       setContracts(provider);
+
+      provider.on("network", (_newNetwork, oldNetwork) => {
+        if (oldNetwork) window.location.reload();
+        console.log("hello");
+      });
+
+      provider.on("accountsChanged", async () => {
+        /** If it's the first login return */
+
+        window.location.reload();
+      });
 
       dispatch(
         setAccountData({
