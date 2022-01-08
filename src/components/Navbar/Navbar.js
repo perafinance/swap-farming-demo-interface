@@ -8,6 +8,8 @@ import { useFunctions } from "hooks/useFunctions";
 import { useRequest } from "hooks/useReqest";
 import { Button } from "components/Button";
 import { GoAlert } from "react-icons/go";
+import { toast } from "react-toastify";
+import { ethers } from "ethers";
 
 const Navbar = () => {
   const { address, isSignedIn } = useSelector((state) => state.account);
@@ -18,6 +20,7 @@ const Navbar = () => {
   const calculateReq = useRequest(calculateUserRewards);
   const claimReq = useRequest(claimAllRewards, {
     onFinished: () => {
+      toast("Awards claimed successfully!");
       setRewards("0");
     },
   });
@@ -33,7 +36,7 @@ const Navbar = () => {
     const fetch = async () => {
       const res = await calculateReq.exec();
       if (res) {
-        setRewards(res?.toNumber());
+        setRewards(res?.toString());
       }
     };
     fetch();
@@ -72,7 +75,7 @@ const Navbar = () => {
 
             <span>
               {isSignedIn && rewards != "0" && rewards
-                ? "Claim Rewards"
+                ? `Claim ${ethers.utils.formatEther(rewards)} tokens`
                 : "No Rewards"}
             </span>
           </Button>

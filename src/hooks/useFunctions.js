@@ -89,7 +89,7 @@ export const useFunctions = () => {
   };
 
   const calculateUserRewards = async () => {
-    const res = await SWAP_CONTRACT.calculateUserRewards();
+    const res = await SWAP_CONTRACT.connect(signer).calculateUserRewards();
     return res;
   };
 
