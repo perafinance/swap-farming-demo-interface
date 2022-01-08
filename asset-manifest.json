@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/swap-farming-demo-interface/static/css/main.fb735967.css",
-    "main.js": "/swap-farming-demo-interface/static/js/main.8b94bc34.js",
+    "main.js": "/swap-farming-demo-interface/static/js/main.687b02e1.js",
     "static/js/787.09a115fd.chunk.js": "/swap-farming-demo-interface/static/js/787.09a115fd.chunk.js",
     "static/media/pera-road.png": "/swap-farming-demo-interface/static/media/pera-road.1d4673f73401546df51a.png",
     "static/media/pangolin.png": "/swap-farming-demo-interface/static/media/pangolin.8dd1f5d61da330de1ec3.png",
@@ -9,11 +9,11 @@
     "static/media/perafinance.png": "/swap-farming-demo-interface/static/media/perafinance.c682d1371909dfe94e46.png",
     "index.html": "/swap-farming-demo-interface/index.html",
     "main.fb735967.css.map": "/swap-farming-demo-interface/static/css/main.fb735967.css.map",
-    "main.8b94bc34.js.map": "/swap-farming-demo-interface/static/js/main.8b94bc34.js.map",
+    "main.687b02e1.js.map": "/swap-farming-demo-interface/static/js/main.687b02e1.js.map",
     "787.09a115fd.chunk.js.map": "/swap-farming-demo-interface/static/js/787.09a115fd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fb735967.css",
-    "static/js/main.8b94bc34.js"
+    "static/js/main.687b02e1.js"
   ]
 }
