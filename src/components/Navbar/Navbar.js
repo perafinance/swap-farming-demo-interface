@@ -55,7 +55,7 @@ const Navbar = () => {
       <div className={styles.wrapper}>
         <div className={styles.title}>
           <img className={styles.logo} src={PeraFinanceLogo} />
-          <h3>Pera Finance Swap Farming - Day #{day}</h3>
+          <h3>Pera Finance | Swap Farming - Day #{day}</h3>
         </div>
 
         <div className={styles.itemWrapper}>
