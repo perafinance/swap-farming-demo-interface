@@ -165,7 +165,7 @@ const Swap = () => {
     if (from === "usdc") {
       res = await isAllowedReq.exec();
 
-      const requestedAmount = Number(USDC);
+      let requestedAmount = Number(USDC);
       if (lastChange === "avax") {
         requestedAmount = requestedAmount * ((100 + tolerance) / 100);
       }
