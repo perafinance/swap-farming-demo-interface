@@ -113,7 +113,7 @@ const InfoTable = () => {
                 )}
               </div>
               <div className={styles.row}>
-                <p>Daily user reward:</p>
+                <p>Daily User Reward:</p>
                 <p>
                   {dailyUserRewardReq.loading ? (
                     <p>Calculating...</p>
@@ -156,7 +156,7 @@ const InfoTable = () => {
           </div>
 
           <div className={styles.row}>
-            <p>Undistributed reward:</p>
+            <p>Undistributed Reward:</p>
             <p>
               {" "}
               {totalRewardReq.loading ? (

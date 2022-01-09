@@ -239,7 +239,7 @@ const Swap = () => {
     if (!amount) {
       return;
     }
-    const length = balances?.avax?.split?.(".")?.[0]?.length;
+    const length = amount?.split?.(".")?.[0]?.length;
     return amount?.substring(0, length + 4);
   };
 
