@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/swap-farming-demo-interface/static/css/main.fb735967.css",
-    "main.js": "/swap-farming-demo-interface/static/js/main.687b02e1.js",
-    "static/js/787.09a115fd.chunk.js": "/swap-farming-demo-interface/static/js/787.09a115fd.chunk.js",
-    "static/media/pera-road.png": "/swap-farming-demo-interface/static/media/pera-road.1d4673f73401546df51a.png",
-    "static/media/pangolin.png": "/swap-farming-demo-interface/static/media/pangolin.8dd1f5d61da330de1ec3.png",
-    "static/media/usdc.png": "/swap-farming-demo-interface/static/media/usdc.b5121d0d486d6e779208.png",
-    "static/media/perafinance.png": "/swap-farming-demo-interface/static/media/perafinance.c682d1371909dfe94e46.png",
-    "index.html": "/swap-farming-demo-interface/index.html",
-    "main.fb735967.css.map": "/swap-farming-demo-interface/static/css/main.fb735967.css.map",
-    "main.687b02e1.js.map": "/swap-farming-demo-interface/static/js/main.687b02e1.js.map",
-    "787.09a115fd.chunk.js.map": "/swap-farming-demo-interface/static/js/787.09a115fd.chunk.js.map"
+    "main.css": "/static/css/main.fb735967.css",
+    "main.js": "/static/js/main.43d5b96e.js",
+    "static/js/787.09a115fd.chunk.js": "/static/js/787.09a115fd.chunk.js",
+    "static/media/pera-road.png": "/static/media/pera-road.1d4673f73401546df51a.png",
+    "static/media/pangolin.png": "/static/media/pangolin.8dd1f5d61da330de1ec3.png",
+    "static/media/usdc.png": "/static/media/usdc.b5121d0d486d6e779208.png",
+    "static/media/perafinance.png": "/static/media/perafinance.c682d1371909dfe94e46.png",
+    "index.html": "/index.html",
+    "main.fb735967.css.map": "/static/css/main.fb735967.css.map",
+    "main.43d5b96e.js.map": "/static/js/main.43d5b96e.js.map",
+    "787.09a115fd.chunk.js.map": "/static/js/787.09a115fd.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fb735967.css",
-    "static/js/main.687b02e1.js"
+    "static/js/main.43d5b96e.js"
   ]
 }
