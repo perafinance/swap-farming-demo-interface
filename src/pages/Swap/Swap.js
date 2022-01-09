@@ -21,27 +21,31 @@ import Pangolin from "assets/images/pangolin.png";
 const Swap = () => {
   const [AVAX, setAVAX] = useState("");
   const [USDC, setUSDC] = useState("");
-  const { isSignedIn, address } = useSelector((state) => state.account);
+  const { isSignedIn, address, provider } = useSelector(
+    (state) => state.account
+  );
   const { requestAccounts } = useRequestAccounts();
   const [from, setFrom] = useState("avax");
   const [lastChange, setLastChange] = useState("avax");
   const [tolerance, setTolerance] = useState(2);
   const [deadline, setDeadline] = useState(30);
+  const [allowedValue, setAllowedValue] = useState(0);
+  const [balances, setBalances] = useState({
+    usdc: 0,
+    avax: 0,
+  });
   const {
     isUSDCAllowed,
-    isAVAXAllowed,
     approveAVAX,
     approveUSDC,
     getBlockTimestamp,
     getAmountsOut,
     getAmountsIn,
+    balanceOfUSDC,
   } = useFunctions();
 
-  const { swapExactAvaxReq, swapExactTokensReq, swapAvaxReq, swapTokensReq } =
-    useSwapRequests({ setUSDC, setAVAX });
-
+  const balanceOfUSDCReq = useRequest((addr) => balanceOfUSDC(addr));
   const isAllowedReq = useRequest(isUSDCAllowed);
-  const isAllowedAvaxReq = useRequest(isAVAXAllowed);
   const approveUSDCReq = useRequest(approveUSDC, {
     onFinished: () => {
       toast("Contract approved successfully");
@@ -52,6 +56,41 @@ const Swap = () => {
       toast("Contract approved successfully");
     },
   });
+
+  const calculateBalances = () => {
+    if (provider) {
+      const fetch = async () => {
+        let avaxBalance = await provider.getBalance(address);
+        avaxBalance = ethers.utils.formatEther(avaxBalance);
+        let usdcBalance = await balanceOfUSDCReq.exec(address);
+        usdcBalance = ethers.utils.formatEther(usdcBalance);
+        setBalances({
+          avax: avaxBalance,
+          usdc: usdcBalance,
+        });
+      };
+      fetch();
+    }
+  };
+
+  const { swapExactAvaxReq, swapExactTokensReq, swapAvaxReq, swapTokensReq } =
+    useSwapRequests({ setUSDC, setAVAX, calculateBalances });
+
+  const allowedButtonState = () => {
+    if (from === "usdc" && lastChange === "usdc") {
+      let requestedAmount = Number(USDC);
+      requestedAmount = requestedAmount * ((100 + tolerance) / 100);
+      if (allowedValue < requestedAmount) {
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      return true;
+    }
+  };
+
+  useEffect(() => {}, []);
 
   const getBlockTimestampReq = useRequest(getBlockTimestamp);
   const getAmountsOutReq = useRequest((val, path) => getAmountsOut(val, path), {
@@ -67,6 +106,12 @@ const Swap = () => {
       return;
     }
   }, [isSignedIn]);
+
+  useEffect(() => {
+    if (provider) {
+      calculateBalances();
+    }
+  }, [provider]);
 
   const handleSwap = async () => {
     const timestamp = await getBlockTimestampReq.exec();
@@ -96,9 +141,6 @@ const Swap = () => {
       } else if (lastChange === "usdc" && from === "usdc") {
         let amountMin = Number(AVAX);
         amountMin = String(amountMin * ((100 - tolerance) / 100));
-        console.log(typeof AVAX, typeof amountMin);
-        console.log(AVAX, amountMin);
-        console.log(AVAX.length, amountMin.length);
 
         swapExactTokensReq.exec(
           ethers.utils.parseEther(USDC),
@@ -122,7 +164,14 @@ const Swap = () => {
     let res;
     if (from === "usdc") {
       res = await isAllowedReq.exec();
-      if (res?.toString() == 0) {
+
+      const requestedAmount = Number(USDC);
+      if (lastChange === "avax") {
+        requestedAmount = requestedAmount * ((100 + tolerance) / 100);
+      }
+      const allowedAmount = Number(ethers.utils.formatEther(res));
+
+      if (allowedAmount < requestedAmount) {
         let approval = true;
         approval = await approveUSDCReq.exec();
         if (approval) {
@@ -136,6 +185,12 @@ const Swap = () => {
     }
   };
 
+  const getAllowedValue = async () => {
+    const res = await isAllowedReq.exec();
+    const value = Number(ethers.utils.formatEther(res));
+    setAllowedValue(value);
+  };
+
   const getOutputAmount = async (amount, path) => {
     if (amount == 0 || !amount) {
       if (from === "avax") {
@@ -143,7 +198,6 @@ const Swap = () => {
       } else {
         setAVAX("");
       }
-
       return;
     }
     const res = await getAmountsOutReq.exec(
@@ -181,8 +235,17 @@ const Swap = () => {
     }
   };
 
+  const formatAmount = (amount) => {
+    if (!amount) {
+      return;
+    }
+    const length = balances?.avax?.split?.(".")?.[0]?.length;
+    return amount?.substring(0, length + 4);
+  };
+
   const outReq = useDebounce((amount, path) => getOutputAmount(amount, path));
   const inReq = useDebounce((amount, path) => getInputAmount(amount, path));
+  const isAllowedDebounce = useDebounce(getAllowedValue);
 
   const avaxInput = (
     <div className={styles.inputContainer}>
@@ -218,6 +281,7 @@ const Swap = () => {
             inReq(e.target.value, AVAX_TO_USDC);
           } else {
             outReq(e.target.value, USDC_TO_AVAX);
+            isAllowedDebounce();
           }
           setUSDC(e.target.value);
         }}
@@ -236,7 +300,16 @@ const Swap = () => {
         <Navbar />
         <div className={styles.wrapper}>
           <div className={styles.inputWrapper}>
-            <h5>From</h5>
+            <div className={styles.label}>
+              <h5>From</h5>
+              <p>
+                Balance:{" "}
+                {from === "avax"
+                  ? formatAmount(balances?.avax)
+                  : formatAmount(balances?.usdc)}
+              </p>
+            </div>
+
             {from === "avax" ? avaxInput : usdcInput}
             <div className={styles.swapWrapper}>
               <div
@@ -248,10 +321,18 @@ const Swap = () => {
                 <CgArrowsExchangeV color="white" size={36} />
               </div>
             </div>
-            <h5>To</h5>
+            <div className={styles.label}>
+              <h5> To</h5>
+              <p>
+                Balance:{" "}
+                {from === "usdc"
+                  ? formatAmount(balances?.avax)
+                  : formatAmount(balances?.usdc)}
+              </p>
+            </div>
             {from === "avax" ? usdcInput : avaxInput}
             <Button
-              disabled={!AVAX || !USDC}
+              disabled={!AVAX || !USDC || !isSignedIn}
               loading={
                 getAmountsInReq.loading ||
                 getAmountsOutReq.loading ||
@@ -266,7 +347,11 @@ const Swap = () => {
               type="tertiary"
               onClick={handleSwap}
             >
-              Swap
+              {isSignedIn ? (
+                <Fragment>{allowedButtonState() ? "Swap" : "Approve"}</Fragment>
+              ) : (
+                "Connect wallet"
+              )}
             </Button>
             <div className={styles.metaWrapper}>
               <div>
@@ -296,13 +381,3 @@ const Swap = () => {
 };
 
 export { Swap };
-
-// slipage -> %2 -> USDC - 0.02%
-
-// AVAX yazdigimda -> swapExactAvaxForTokens()
-// A swapAvaxForExactTokens()
-//                 -> swapAvaxForAVAX
-
-/* swapExactAVAXForTokens("0", AVAX_TO_USDC, address, 99999999999, {
-  value: ethers.utils.parseEther("0.01"),
-}), */

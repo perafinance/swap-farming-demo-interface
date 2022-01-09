@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useFunctions } from "./useFunctions";
 import { useRequest } from "./useReqest";
 
-export const useSwapRequests = ({ setUSDC, setAVAX }) => {
+export const useSwapRequests = ({ setUSDC, setAVAX, calculateBalances }) => {
   const {
     swapExactAVAXForTokens,
     swapExactTokensForAVAX,
@@ -19,6 +19,7 @@ export const useSwapRequests = ({ setUSDC, setAVAX }) => {
       },
       onFinished: () => {
         toast("Tokens swapped succesfully");
+        calculateBalances?.();
         setAVAX("");
         setUSDC("");
       },
@@ -33,6 +34,7 @@ export const useSwapRequests = ({ setUSDC, setAVAX }) => {
       },
       onFinished: () => {
         toast("Tokens swapped succesfully");
+        calculateBalances?.();
         setAVAX("");
         setUSDC("");
       },
@@ -45,6 +47,7 @@ export const useSwapRequests = ({ setUSDC, setAVAX }) => {
     },
     onFinished: () => {
       toast("Tokens swapped succesfully");
+      calculateBalances?.();
       setAVAX("");
       setUSDC("");
     },
@@ -58,6 +61,7 @@ export const useSwapRequests = ({ setUSDC, setAVAX }) => {
       },
       onFinished: () => {
         toast("Tokens swapped succesfully");
+        calculateBalances?.();
         setAVAX("");
         setUSDC("");
       },

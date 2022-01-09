@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import styles from "./Navbar.module.scss";
-import { BsFillPersonFill } from "react-icons/bs";
+import { BsFillPersonFill, BsWallet } from "react-icons/bs";
 import PeraFinanceLogo from "assets/images/perafinance.png";
 
 import { Fragment, useEffect, useState } from "react";
@@ -10,14 +10,20 @@ import { Button } from "components/Button";
 import { GoAlert } from "react-icons/go";
 import { toast } from "react-toastify";
 import { ethers } from "ethers";
+import useRequestAccounts from "hooks/useRequestAccounts";
+import { useDropdownPopper } from "hooks/useDropdownPopper";
+import { InfoTable } from "./InfoTable";
 
 const Navbar = () => {
   const { address, isSignedIn } = useSelector((state) => state.account);
+  const [isCalculatedValue, setIsCalculatedValue] = useState(false);
 
-  const { calculateUserRewards, claimAllRewards, calcDay } = useFunctions();
+  const { calculateUserRewards, claimAllRewards, isCalculated } =
+    useFunctions();
+  const { requestAccounts } = useRequestAccounts();
 
-  const calcDayReq = useRequest(calcDay);
   const calculateReq = useRequest(calculateUserRewards);
+  const isCalculatedReq = useRequest(isCalculated);
   const claimReq = useRequest(claimAllRewards, {
     onFinished: () => {
       toast("Awards claimed successfully!");
@@ -26,7 +32,16 @@ const Navbar = () => {
   });
 
   const [rewards, setRewards] = useState(0);
-  const [day, setDay] = useState(0);
+
+  const {
+    setReferenceElement,
+    setPopperElement,
+    popperStyles,
+    setExpand,
+    expand,
+    attributes,
+    closeRef,
+  } = useDropdownPopper({ placement: "bottom-end" });
 
   useEffect(() => {
     if (!isSignedIn) {
@@ -40,22 +55,27 @@ const Navbar = () => {
       }
     };
     fetch();
+  }, [isSignedIn]);
 
-    const calcDayFetch = async () => {
-      const res = await calcDayReq.exec();
+  useEffect(() => {
+    if (!isSignedIn) {
+      return;
+    }
+    const fetch = async () => {
+      const res = await isCalculatedReq.exec();
       if (res) {
-        setDay(res.toNumber());
+        setIsCalculatedValue(res);
       }
     };
-    calcDayFetch();
-  }, [isSignedIn]);
+    fetch();
+  }, []);
 
   return (
     <Fragment>
       <div className={styles.wrapper}>
         <div className={styles.title}>
           <img className={styles.logo} src={PeraFinanceLogo} />
-          <h3>Pera Finance | Swap Farming - Day #{day}</h3>
+          <h3>Pera Finance | Swap Farming</h3>
         </div>
 
         <div className={styles.itemWrapper}>
@@ -67,7 +87,7 @@ const Navbar = () => {
             size="small"
             type="primary"
           >
-            {isSignedIn && rewards != "0" && rewards ? (
+            {isSignedIn && rewards != "0" && rewards && isCalculatedValue ? (
               <span className="icon">
                 <GoAlert />
               </span>
@@ -81,16 +101,39 @@ const Navbar = () => {
           </Button>
 
           {isSignedIn && <p className={styles.network}>Fuji</p>}
-          {address && (
-            <p className={styles.account}>
+          {address ? (
+            <div ref={closeRef}>
+              <p
+                onClick={() => setExpand(!expand)}
+                className={styles.account}
+                ref={setReferenceElement}
+              >
+                <span className="icon">
+                  <BsFillPersonFill size={24} />
+                </span>
+                <span>
+                  {address?.substring?.(0, 4) +
+                    "..." +
+                    address?.substring?.(address?.length - 4)}
+                </span>
+              </p>
+              {expand && (
+                <div
+                  className={styles.popper}
+                  ref={setPopperElement}
+                  style={popperStyles.popper}
+                  {...attributes.popper}
+                >
+                  <InfoTable />
+                </div>
+              )}
+            </div>
+          ) : (
+            <p className={styles.account} onClick={() => requestAccounts(true)}>
               <span className="icon">
-                <BsFillPersonFill size={24} />
+                <BsWallet size={24} />
               </span>
-              <span>
-                {address?.substring?.(0, 4) +
-                  "..." +
-                  address?.substring?.(address?.length - 4)}
-              </span>
+              <span>Connect Wallet</span>
             </p>
           )}
         </div>

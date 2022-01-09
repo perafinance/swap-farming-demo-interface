@@ -125,3 +125,9 @@
     height: 32px;
   }
 }
+
+.label {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}

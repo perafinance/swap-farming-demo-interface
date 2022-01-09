@@ -19,14 +19,16 @@ export default function useRequestAccounts() {
 
   const dispatch = useDispatch();
   const { setContracts } = useContracts();
-  const { address } = useSelector((state) => state.account);
 
-  const requestAccounts = async () => {
+  const requestAccounts = async (isDirect) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
 
     try {
       //await checkIfRightNetwork(AVALANCHE_NETWORK);
-      await provider.send("eth_requestAccounts", []);
+      if (isDirect) {
+        await provider.send("eth_requestAccounts", []);
+      }
+      //
       let signer = await provider.getSigner();
       const address = await signer.getAddress();
 
@@ -34,7 +36,6 @@ export default function useRequestAccounts() {
 
       provider.on("network", (_newNetwork, oldNetwork) => {
         if (oldNetwork) window.location.reload();
-        console.log("hello");
       });
 
       dispatch(

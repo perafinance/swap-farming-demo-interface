@@ -40,6 +40,11 @@ export const useFunctions = () => {
     return res;
   };
 
+  const balanceOfUSDC = async (addr) => {
+    const res = await USDC_CONTRACT?.balanceOf(addr);
+    return res;
+  };
+
   const isAVAXAllowed = async () => {
     const res = await AVAX_CONTRACT?.allowance(address, SWAP_CONTRACT.address);
     return res;
@@ -98,7 +103,40 @@ export const useFunctions = () => {
     return res;
   };
 
+  const totalDays = async () => {
+    const res = await SWAP_CONTRACT.connect(signer).totalDays();
+    return res;
+  };
+
+  const dailyVolumes = async (day) => {
+    const res = await SWAP_CONTRACT.connect(signer).dailyVolumes(day);
+    return res;
+  };
+
+  const volumeRecords = async (addr, day) => {
+    const res = await SWAP_CONTRACT.connect(signer).volumeRecords(addr, day);
+    return res;
+  };
+
+  const totalRewardBalance = async () => {
+    const res = await SWAP_CONTRACT.connect(signer).totalRewardBalance();
+    return res;
+  };
+
+  const isCalculated = async () => {
+    const res = await SWAP_CONTRACT.isCalculated();
+    return res;
+  };
+
+  const calculateDailyUserReward = async (day) => {
+    const res = await SWAP_CONTRACT.connect(signer).calculateDailyUserReward(
+      day
+    );
+    return res;
+  };
+
   return {
+    totalRewardBalance,
     swapExactAVAXForTokens,
     isUSDCAllowed,
     swapExactAVAXForTokens,
@@ -114,5 +152,11 @@ export const useFunctions = () => {
     calculateUserRewards,
     claimAllRewards,
     calcDay,
+    totalDays,
+    dailyVolumes,
+    volumeRecords,
+    calculateDailyUserReward,
+    balanceOfUSDC,
+    isCalculated,
   };
 };
