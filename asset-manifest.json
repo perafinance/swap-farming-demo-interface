@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.fb735967.css",
-    "main.js": "/static/js/main.e04ffabc.js",
+    "main.css": "/static/css/main.1b8a6c49.css",
+    "main.js": "/static/js/main.86ed0afb.js",
     "static/js/787.09a115fd.chunk.js": "/static/js/787.09a115fd.chunk.js",
     "static/media/pera-road.png": "/static/media/pera-road.1d4673f73401546df51a.png",
     "static/media/pangolin.png": "/static/media/pangolin.8dd1f5d61da330de1ec3.png",
     "static/media/usdc.png": "/static/media/usdc.b5121d0d486d6e779208.png",
     "static/media/perafinance.png": "/static/media/perafinance.c682d1371909dfe94e46.png",
     "index.html": "/index.html",
-    "main.fb735967.css.map": "/static/css/main.fb735967.css.map",
-    "main.e04ffabc.js.map": "/static/js/main.e04ffabc.js.map",
+    "main.1b8a6c49.css.map": "/static/css/main.1b8a6c49.css.map",
+    "main.86ed0afb.js.map": "/static/js/main.86ed0afb.js.map",
     "787.09a115fd.chunk.js.map": "/static/js/787.09a115fd.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.fb735967.css",
-    "static/js/main.e04ffabc.js"
+    "static/css/main.1b8a6c49.css",
+    "static/js/main.86ed0afb.js"
   ]
 }
