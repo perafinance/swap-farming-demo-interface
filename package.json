@@ -1,7 +1,7 @@
 {
   "name": "swap-frontend",
   "version": "0.1.0",
-  "homepage": "https://ulerdogan.github.io/swap-farming-demo-interface/",
+  "homepage": "https://perafinance.github.io/swap-farming-demo-interface/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
