@@ -39,17 +39,23 @@ const InfoTable = () => {
     }
 
     const calcDayFetch = async () => {
+      let _d, _td;
       let res = await calcDayReq.exec();
       if (res) {
         const number = res?.toNumber();
+        _d = number;
         setDay(number);
         setControllerDay(number);
       }
       res = await totalDayReq.exec();
       if (res) {
         const number = res?.toNumber();
-        setTotalDay(number);
-        dailyVolumeReq.exec(number);
+        _td = number;
+        setTotalDay(number - 1);
+        dailyVolumeReq.exec(number - 1);
+      }
+      if (_d > _td) {
+        setControllerDay(_td)
       }
       res = await totalRewardReq.exec();
       if (res) {
@@ -127,7 +133,7 @@ const InfoTable = () => {
             <div className={styles.controller}>
               <div
                 onClick={() => {
-                  if (controllerDay + 1 > day) {
+                  if (controllerDay + 1 > day || controllerDay + 1 > totalDay) {
                     setControllerDay(0);
                   } else {
                     setControllerDay(controllerDay + 1);
@@ -143,7 +149,7 @@ const InfoTable = () => {
               <div
                 onClick={() => {
                   if (controllerDay - 1 < 0) {
-                    setControllerDay(day);
+                    setControllerDay(totalDay);
                   } else {
                     setControllerDay(controllerDay - 1);
                   }
