@@ -149,7 +149,7 @@ const InfoTable = () => {
               <div
                 onClick={() => {
                   if (controllerDay - 1 < 0) {
-                    setControllerDay(totalDay);
+                    setControllerDay(day);
                   } else {
                     setControllerDay(controllerDay - 1);
                   }
