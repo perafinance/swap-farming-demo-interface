@@ -144,7 +144,7 @@ const InfoTable = () => {
                 <BsArrowUp size={24} />
               </div>
               <div className={styles.box}>
-                <p>{controllerDay}</p>
+                <p>{controllerDay+1}</p>
               </div>
               <div
                 onClick={() => {
