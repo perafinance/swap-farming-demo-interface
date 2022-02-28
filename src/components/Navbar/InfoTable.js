@@ -96,7 +96,7 @@ const InfoTable = () => {
           <div className={styles.row}>
             <p>Day:</p>
             <p>
-              {day} / {totalDay}
+              {day + 1} / {totalDay + 1}
             </p>
           </div>
           <div className={styles.rowWrapper}>
